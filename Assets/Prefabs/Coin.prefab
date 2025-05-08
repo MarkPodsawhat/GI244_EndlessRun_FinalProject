@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 91f187593c60b8546a6fb2868d7ab3a1, type: 3}
       propertyPath: m_Name
-      value: Coin 1
+      value: Coin
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 91f187593c60b8546a6fb2868d7ab3a1, type: 3}
       propertyPath: m_TagString
@@ -116,7 +116,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 124
   m_CollisionDetection: 0
 --- !u!135 &3900311203658205405
 SphereCollider:

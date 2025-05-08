@@ -40,7 +40,6 @@ public class ObstacleObjectPool : MonoBehaviour
         for (int i = 0; i < instantPoolSize; i++)
         {
             CreateCoins();
-            Debug.Log("Creat Coin");
         }
 
         for (int i = 0; i < obstaclePrefabs.Length; i++)
@@ -58,7 +57,15 @@ public class ObstacleObjectPool : MonoBehaviour
         coinPool.Add(coin);
     }
 
-    
+    void CreateObstacle(int index)
+    {
+        GameObject obs = Instantiate(obstaclePrefabs[index]);
+
+        obs.SetActive(false);
+        obstaclePool.Add(obs);
+    }
+
+
     public GameObject AcquireCoin()
     {
         if (coinPool.Count == 0)
@@ -81,6 +88,21 @@ public class ObstacleObjectPool : MonoBehaviour
         //}
     }
 
+    public GameObject AcquireObstacle()
+    {
+        
+
+        GameObject obs = obstaclePool[0];
+        obstaclePool.RemoveAt(0);
+
+        obs.SetActive(true);
+        return obs;
+    }
+
+    
+
+    
+
     public void ReturnObject(GameObject gameObject)
     {
         if (gameObject.gameObject.CompareTag("Coin"))
@@ -90,16 +112,8 @@ public class ObstacleObjectPool : MonoBehaviour
         }
         else if (gameObject.CompareTag("Obstacle"))
         {
-
+            obstaclePool.Add(gameObject);
+            gameObject.SetActive(false);
         }
     }
-
-    void CreateObstacle(int index)
-    {
-        GameObject obs = Instantiate(obstaclePrefabs[index]);
-
-        obs.SetActive(false);
-        obstaclePool.Add(obs);
-    }
-
 }

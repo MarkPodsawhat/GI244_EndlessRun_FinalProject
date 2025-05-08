@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,9 +29,7 @@ public class MoveLeft : MonoBehaviour
 
         if (transform.position.x < leftBound)
         {
-            Destroy(gameObject);
-            //ObstacleObjectPool.GetInstance().ReturnCoin(gameObject);
-            Debug.Log(transform.position.x);
+            ObstacleObjectPool.GetInstance().ReturnObject(gameObject);
         }
     }
 
@@ -37,15 +37,7 @@ public class MoveLeft : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Avatar"))
         {
-            if (this.gameObject.CompareTag("Coin"))
-            {
-                ObstacleObjectPool.GetInstance().ReturnObject(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
+            ObstacleObjectPool.GetInstance().ReturnObject(gameObject);
         }
     }
 }

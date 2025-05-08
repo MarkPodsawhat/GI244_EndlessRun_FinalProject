@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
     private int jumpCount = 2;
     private MoveLeft moveLeft;
 
-    private int hp = 3;
+    private int maxHp = 3;
+    private int hp;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI lifeText;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        hp = maxHp;
         scoreText.text = score.ToString();
 
         // rb.AddForce(1000 * Vector3.up);
@@ -72,19 +74,18 @@ public class PlayerController : MonoBehaviour
             moveLeft.leftBound *= 2;
         }
 
-        if (jumpAction.triggered && isOnGround && !gameOver)
+        if (jumpAction.triggered && jumpCount != 0 && !gameOver)
         {
-            //rb.linearVelocity.y = 0;
+            rb.linearVelocity = new Vector3(0,0,0);
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
             jumpCount--;
-            if (jumpCount <= 0 && !gameOver)
-            {
-                isOnGround = false;
-            }
+         
             
+            isOnGround = false;
             
             playerAnim.SetTrigger("Jump_trig");
             dirtParticle.Stop();
+            Debug.Log("stop dirt");
             playerAudio.PlayOneShot(jumpSfx);
         }
     }
@@ -95,7 +96,11 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
             jumpCount = 2;
-            dirtParticle.Play();
+            if (!dirtParticle.isPlaying)
+            {
+                dirtParticle.Play();
+                Debug.Log("playing dirt");
+            }
         }
         else if (collision.gameObject.CompareTag("Obstacle") && !gameOver)
         {
@@ -110,8 +115,8 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Game Over!");
                 playerAnim.SetBool("Death_b", true);
                 playerAnim.SetInteger("DeathType_int", 1);
-                explosionParticle.Play();
                 dirtParticle.Stop();
+                Debug.Log("stop dirt");
             }
         }
         else if (collision.gameObject.CompareTag("Coin") && !gameOver)
