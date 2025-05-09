@@ -29,10 +29,13 @@ public class SpawnManager : MonoBehaviour
 
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        InvokeRepeating(nameof(SpawnCoin), 2.5f, 2.7f);
-        InvokeRepeating(nameof(SpawnObstacle), 2, 2.1f);
+        //InvokeRepeating(nameof(SpawnCoin), 2.5f, 2.7f);
+        //InvokeRepeating(nameof(SpawnObstacle), 2, 2.1f);
+        StartCoroutine(CoinRoutine());
+        StartCoroutine(ObstacleRoutine());
         InvokeRepeating(nameof(SpawnHeal), 15, 15);
         InvokeRepeating(nameof(SpawnSpeed), 15, 15);
+        
 
     }
 
@@ -42,10 +45,48 @@ public class SpawnManager : MonoBehaviour
         if (playercontroller.gameOver == true)
         {
             CancelInvoke();
+            StopAllCoroutines();
+            
         }
     }
 
     
+    IEnumerator CoinRoutine()
+    {
+        yield return new WaitForSeconds(2.5f);
+        
+        while (true)
+        {
+            SpawnCoin();
+            if (playercontroller.isSpeedBoost)
+            {
+                yield return new WaitForSeconds(1.35f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(2.7f);
+            }
+        }
+    }
+
+    IEnumerator ObstacleRoutine()
+    {
+        yield return new WaitForSeconds(2);
+
+        while (true)
+        {
+            SpawnObstacle();
+            if (playercontroller.isSpeedBoost)
+            {
+                yield return new WaitForSeconds(1.05f);
+            }
+            else
+            {
+                yield return new WaitForSeconds(2.1f);
+            }
+        }
+    }
+
     void SpawnObstacle()
     {
         var obs = ObstacleObjectPool.GetInstance().AcquireObstacle();
