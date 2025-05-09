@@ -85,9 +85,19 @@ public class PlayerController : MonoBehaviour
             isOnGround = false;
             
             playerAnim.SetTrigger("Jump_trig");
-            dirtParticle.Stop();
-            Debug.Log("stop dirt");
             playerAudio.PlayOneShot(jumpSfx);
+        }
+
+        if (!isOnGround || gameOver)
+        {
+            dirtParticle.Stop();
+        }
+        else
+        {
+            if (!dirtParticle.isPlaying)
+            {
+                dirtParticle.Play();
+            }
         }
     }
 
@@ -97,11 +107,7 @@ public class PlayerController : MonoBehaviour
         {
             isOnGround = true;
             jumpCount = 2;
-            if (!dirtParticle.isPlaying)
-            {
-                dirtParticle.Play();
-                Debug.Log("playing dirt");
-            }
+ 
         }
         else if (collision.gameObject.CompareTag("Obstacle") && !gameOver)
         {
@@ -116,8 +122,6 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Game Over!");
                 playerAnim.SetBool("Death_b", true);
                 playerAnim.SetInteger("DeathType_int", 1);
-                dirtParticle.Stop();
-                Debug.Log("stop dirt");
             }
         }
         else if (collision.gameObject.CompareTag("Coin") && !gameOver)
