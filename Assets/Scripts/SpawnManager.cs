@@ -11,8 +11,6 @@ public class SpawnManager : MonoBehaviour
     public Vector3 spawnPos = new(25, 0, 0);
     public GameObject[] SpawnPos;
 
-    public float startDelay = 2;
-    public float repeatRate = 2;
 
     private PlayerController playercontroller;
 
@@ -30,9 +28,12 @@ public class SpawnManager : MonoBehaviour
 
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        InvokeRepeating(nameof(SpawnCoin), startDelay, repeatRate);
-        InvokeRepeating(nameof(SpawnObstacle), 3, 3);
+        InvokeRepeating(nameof(SpawnCoin), 2.5f, 2.7f);
+        InvokeRepeating(nameof(SpawnObstacle), 2, 2.1f);
+        InvokeRepeating(nameof(SpawnHeal), 15, 15);
+
     }
+
 
     private void Update()
     {
@@ -54,14 +55,17 @@ public class SpawnManager : MonoBehaviour
 
     public void SpawnCoin()
     {
-        int coinRnd = Random.Range(0, SpawnPos.Length);
+        int rnd = Random.Range(0, SpawnPos.Length);
 
         var coins = ObstacleObjectPool.GetInstance().AcquireCoin();
-        coins.transform.SetLocalPositionAndRotation(SpawnPos[coinRnd].transform.position, Quaternion.Euler(90,0,0));
+        coins.transform.SetLocalPositionAndRotation(SpawnPos[rnd].transform.position, Quaternion.Euler(90,0,0));
     }
 
-    void SpawnSpeedBoost()
+    void SpawnHeal()
     {
+        int rnd = Random.Range(0, SpawnPos.Length);
 
+        var heal = ObstacleObjectPool.GetInstance().AcquireHeal();
+        heal.transform.SetLocalPositionAndRotation(SpawnPos[rnd].transform.position, Quaternion.Euler(-90,0,0));
     }
 }
