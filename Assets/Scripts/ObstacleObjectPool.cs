@@ -6,7 +6,8 @@ public class ObstacleObjectPool : MonoBehaviour
 {
     [SerializeField] private int instantPoolSize = 3;
     [SerializeField] private GameObject coinPrefabs;
-    [SerializeField] private GameObject[] obstaclePrefabs = new GameObject[3];
+    [SerializeField] private GameObject[] obstaclePrefabs;
+    [SerializeField] private GameObject healPrefabs;
 
     [SerializeField] private List<GameObject> coinPool = new();
     [SerializeField] private List<GameObject> obstaclePool = new();
@@ -46,6 +47,8 @@ public class ObstacleObjectPool : MonoBehaviour
         {
             CreateObstacle(i);
         }
+
+        CreateHeal();
     }
 
  
@@ -65,6 +68,15 @@ public class ObstacleObjectPool : MonoBehaviour
         obstaclePool.Add(obs);
     }
 
+    void CreateHeal()
+    {
+        GameObject heal = Instantiate(healPrefabs);
+
+        heal.SetActive(false);
+
+        healPrefabs = heal;
+    }
+
 
     public GameObject AcquireCoin()
     {
@@ -78,14 +90,6 @@ public class ObstacleObjectPool : MonoBehaviour
 
         coin.SetActive(true);
         return coin;
-
-        //foreach (GameObject coin in coinPool)
-        //{
-        //    if (coin.activeSelf == false)
-        //    {
-        //        coin.SetActive(true);
-        //    }
-        //}
     }
 
     public GameObject AcquireObstacle()
@@ -99,7 +103,11 @@ public class ObstacleObjectPool : MonoBehaviour
         return obs;
     }
 
-    
+    public GameObject AcquireHeal()
+    {
+        healPrefabs.SetActive(true);
+        return healPrefabs;
+    } 
 
     
 
@@ -113,6 +121,10 @@ public class ObstacleObjectPool : MonoBehaviour
         else if (gameObject.CompareTag("Obstacle"))
         {
             obstaclePool.Add(gameObject);
+            gameObject.SetActive(false);
+        }
+        else if (gameObject.CompareTag("Heal"))
+        {
             gameObject.SetActive(false);
         }
     }

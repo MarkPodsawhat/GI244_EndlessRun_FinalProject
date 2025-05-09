@@ -153,8 +153,6 @@ MonoBehaviour:
   - {fileID: 1018220313}
   - {fileID: 1613696510}
   - {fileID: 1470519797}
-  startDelay: 2
-  repeatRate: 2
 --- !u!4 &11781320
 Transform:
   m_ObjectHideFlags: 0
@@ -205,6 +203,7 @@ MonoBehaviour:
   - {fileID: 5842114324701935107, guid: a0f4f1964968e794793346c5e8a07472, type: 3}
   - {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
   - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
+  healPrefabs: {fileID: 8427554292453878959, guid: b809c3b4dd7825e45972aee17f0bd8fe, type: 3}
   coinPool: []
   obstaclePool: []
 --- !u!4 &27101882
@@ -1774,7 +1773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2003360797}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1893,6 +1892,7 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 2003360800}
   - {fileID: 534669905}
   - {fileID: 170076735}
   - {fileID: 2014335015}
@@ -1901,4 +1901,3 @@ SceneRoots:
   - {fileID: 1319502987}
   - {fileID: 11781320}
   - {fileID: 27101882}
-  - {fileID: 2003360800}

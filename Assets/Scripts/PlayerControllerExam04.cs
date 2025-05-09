@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     public AudioClip jumpSfx;
     public AudioClip crashSfx;
     public AudioClip coinsSfx;
-    public AudioClip healSfx;   
+    public AudioClip healSfx;
+    public AudioClip speedSfx;
 
     private Rigidbody rb;
     private InputAction jumpAction;
@@ -122,6 +123,13 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Coin") && !gameOver)
         {
             score += 1;
+        }
+        else if (collision.gameObject.CompareTag("Heal") && !gameOver)
+        {
+            if (hp < maxHp)
+            {
+                hp++;
+            }
         }
     }
 }
