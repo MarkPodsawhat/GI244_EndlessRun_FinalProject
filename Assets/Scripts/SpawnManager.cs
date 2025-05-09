@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,6 +32,7 @@ public class SpawnManager : MonoBehaviour
         InvokeRepeating(nameof(SpawnCoin), 2.5f, 2.7f);
         InvokeRepeating(nameof(SpawnObstacle), 2, 2.1f);
         InvokeRepeating(nameof(SpawnHeal), 15, 15);
+        InvokeRepeating(nameof(SpawnSpeed), 15, 15);
 
     }
 
@@ -42,9 +44,6 @@ public class SpawnManager : MonoBehaviour
             CancelInvoke();
         }
     }
-
-
-
 
     
     void SpawnObstacle()
@@ -67,5 +66,13 @@ public class SpawnManager : MonoBehaviour
 
         var heal = ObstacleObjectPool.GetInstance().AcquireHeal();
         heal.transform.SetLocalPositionAndRotation(SpawnPos[rnd].transform.position, Quaternion.Euler(-90,0,0));
+    }
+
+    void SpawnSpeed()
+    {
+        int rnd = Random.Range(0, SpawnPos.Length);
+
+        var heal = ObstacleObjectPool.GetInstance().AcquireSpeed();
+        heal.transform.SetLocalPositionAndRotation(SpawnPos[rnd].transform.position, Quaternion.Euler(0, 0, 0));
     }
 }

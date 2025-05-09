@@ -18,9 +18,16 @@ public class MoveLeft : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
+        if (playerController.isSpeedBoost)
+        {
+            speed = 20f;
+        }
+        else
+        {
+            speed = 10f;
+        }
 
         if (!playerController.gameOver)
         {
@@ -30,7 +37,9 @@ public class MoveLeft : MonoBehaviour
         if (transform.position.x < leftBound)
         {
             ObstacleObjectPool.GetInstance().ReturnObject(gameObject);
-        }
+        }   
+
+        
     }
 
     private void OnCollisionEnter(Collision collision)
