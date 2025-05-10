@@ -15,7 +15,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip crashSfx;
     public AudioClip coinsSfx;
     public AudioClip healSfx;
-    public AudioClip speedSfx;
+    public AudioClip speedStartSfx;
+    public AudioClip speedEndSfx;
+    public AudioClip deadSfx;
 
     private Rigidbody rb;
     private InputAction jumpAction;
@@ -39,7 +41,11 @@ public class PlayerController : MonoBehaviour
     private float endDuration = 0;
     private float speedDuration = 5;
 
+    public GameObject gameOverMenu;
+    public GameObject inGameUI;
+
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI finalScoreText;
     [SerializeField] private TextMeshProUGUI lifeText;
     private int score = 0;
     
@@ -71,6 +77,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        finalScoreText.text = score.ToString();
         scoreText.text = score.ToString();
         lifeText.text = hp.ToString();
 
@@ -105,8 +112,9 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Time.time >= endDuration)
+        if (Time.time >= endDuration && isSpeedBoost)
         {
+            playerAudio.PlayOneShot(speedEndSfx);
             isSpeedBoost = false;
         }
     }
@@ -132,26 +140,32 @@ public class PlayerController : MonoBehaviour
 
                     if (hp <= 0)
                     {
-
+                        playerAudio.PlayOneShot(deadSfx);
+                        gameOverMenu.SetActive(true);
+                        inGameUI.SetActive(false);
                         gameOver = true;
                         Debug.Log("Game Over!");
                         playerAnim.SetBool("Death_b", true);
                         playerAnim.SetInteger("DeathType_int", 1);
+                        Debug.Log(score);
                     }
                     break;
 
                 case "Coin":
+                    playerAudio.PlayOneShot(coinsSfx);
                     score++;
                     break;
 
                 case "Heal":
                     if (hp < maxHp)
                     {
+                        playerAudio.PlayOneShot(healSfx);
                         hp++;
                     }
                     break ;
 
                 case "SpeedBoost":
+                    playerAudio.PlayOneShot(speedStartSfx);
                     isSpeedBoost = true;
                     endDuration = Time.time + speedDuration;
 

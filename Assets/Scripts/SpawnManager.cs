@@ -33,8 +33,8 @@ public class SpawnManager : MonoBehaviour
         //InvokeRepeating(nameof(SpawnObstacle), 2, 2.1f);
         StartCoroutine(CoinRoutine());
         StartCoroutine(ObstacleRoutine());
-        InvokeRepeating(nameof(SpawnHeal), 15, 15);
-        InvokeRepeating(nameof(SpawnSpeed), 15, 15);
+        InvokeRepeating(nameof(SpawnHeal), 15, 20.3f);
+        InvokeRepeating(nameof(SpawnSpeed), 30, 32.6f);
         
 
     }

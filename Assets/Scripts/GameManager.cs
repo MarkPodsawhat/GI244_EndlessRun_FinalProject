@@ -1,16 +1,36 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject mainMenu;
+    public GameObject inGameUI;
+    public GameObject gameOverMenu;
+
+
+    private void Awake()
     {
-        
+        mainMenu.SetActive(true);
+        inGameUI.SetActive(false);
+        gameOverMenu.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        
+        Time.timeScale = 0f;
+    }
+
+    public void StartButton()
+    {
+        mainMenu.SetActive(false);
+        inGameUI.SetActive(true);
+        Time.timeScale = 1f;
+    }
+
+    public void QuitButton()
+    {
+        var activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.name);
     }
 }
