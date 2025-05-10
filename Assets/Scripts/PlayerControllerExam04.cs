@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private InputAction jumpAction;
     private bool isOnGround = true;
 
+    public bool isSpeedBoost = false; 
+
     private InputAction sprintAction;
 
     private Animator playerAnim;
@@ -33,6 +35,9 @@ public class PlayerController : MonoBehaviour
 
     private int maxHp = 3;
     private int hp;
+
+    private float endDuration = 0;
+    private float speedDuration = 5;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI lifeText;
@@ -99,41 +104,60 @@ public class PlayerController : MonoBehaviour
                 dirtParticle.Play();
             }
         }
+
+        if (Time.time >= endDuration)
+        {
+            isSpeedBoost = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && !gameOver)
+        if (!gameOver)
         {
-            isOnGround = true;
-            jumpCount = 2;
- 
-        }
-        else if (collision.gameObject.CompareTag("Obstacle") && !gameOver)
-        {
-            hp--;
-            explosionParticle.Play();
-            playerAudio.PlayOneShot(crashSfx);
+            switch (collision.gameObject.tag) 
+            {
+                case "Ground":
+                    isOnGround = true;
+                    jumpCount = 2;
+                    break;
 
-            if (hp <= 0)
-            {
-                
-                gameOver = true;
-                Debug.Log("Game Over!");
-                playerAnim.SetBool("Death_b", true);
-                playerAnim.SetInteger("DeathType_int", 1);
+                case "Obstacle":
+                    if (!isSpeedBoost)
+                    {
+                        hp--;
+                    }
+                    explosionParticle.Play();
+                    playerAudio.PlayOneShot(crashSfx);
+
+                    if (hp <= 0)
+                    {
+
+                        gameOver = true;
+                        Debug.Log("Game Over!");
+                        playerAnim.SetBool("Death_b", true);
+                        playerAnim.SetInteger("DeathType_int", 1);
+                    }
+                    break;
+
+                case "Coin":
+                    score++;
+                    break;
+
+                case "Heal":
+                    if (hp < maxHp)
+                    {
+                        hp++;
+                    }
+                    break ;
+
+                case "SpeedBoost":
+                    isSpeedBoost = true;
+                    endDuration = Time.time + speedDuration;
+
+
+                    break;
             }
         }
-        else if (collision.gameObject.CompareTag("Coin") && !gameOver)
-        {
-            score += 1;
-        }
-        else if (collision.gameObject.CompareTag("Heal") && !gameOver)
-        {
-            if (hp < maxHp)
-            {
-                hp++;
-            }
-        }
-    }
+    }//onCollisionEnter
 }

@@ -204,6 +204,7 @@ MonoBehaviour:
   - {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
   - {fileID: 151096, guid: 367149bd17c4d4d4e8868ec6a5cf8d45, type: 3}
   healPrefabs: {fileID: 8427554292453878959, guid: b809c3b4dd7825e45972aee17f0bd8fe, type: 3}
+  speedPrefabs: {fileID: 7110462390428548499, guid: 8fc23668164563044aaa9d354bc3d30a, type: 3}
   coinPool: []
   obstaclePool: []
 --- !u!4 &27101882
@@ -752,6 +753,7 @@ MonoBehaviour:
   coinsSfx: {fileID: 0}
   healSfx: {fileID: 0}
   speedSfx: {fileID: 0}
+  isSpeedBoost: 0
   gameOver: 0
   scoreText: {fileID: 1559225329}
   lifeText: {fileID: 1494652992}
@@ -1135,7 +1137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3deb3c3f12d4b4c47afac0cc51e7dd31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   leftBound: -15
 --- !u!65 &835818924
 BoxCollider:

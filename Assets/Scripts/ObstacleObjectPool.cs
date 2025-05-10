@@ -8,6 +8,7 @@ public class ObstacleObjectPool : MonoBehaviour
     [SerializeField] private GameObject coinPrefabs;
     [SerializeField] private GameObject[] obstaclePrefabs;
     [SerializeField] private GameObject healPrefabs;
+    [SerializeField] private GameObject speedPrefabs;
 
     [SerializeField] private List<GameObject> coinPool = new();
     [SerializeField] private List<GameObject> obstaclePool = new();
@@ -49,6 +50,7 @@ public class ObstacleObjectPool : MonoBehaviour
         }
 
         CreateHeal();
+        CreatSpeed();
     }
 
  
@@ -75,6 +77,14 @@ public class ObstacleObjectPool : MonoBehaviour
         heal.SetActive(false);
 
         healPrefabs = heal;
+    }
+
+    void CreatSpeed()
+    {
+        GameObject speed = Instantiate(speedPrefabs);
+
+        speed.SetActive(false);
+        speedPrefabs = speed;
     }
 
 
@@ -109,23 +119,33 @@ public class ObstacleObjectPool : MonoBehaviour
         return healPrefabs;
     } 
 
-    
-
-    public void ReturnObject(GameObject gameObject)
+    public GameObject AcquireSpeed()
     {
-        if (gameObject.gameObject.CompareTag("Coin"))
+        speedPrefabs.SetActive(true);                                                                                                                                       
+        return speedPrefabs;
+    }
+
+    public void ReturnObject(GameObject objectReturn)
+    {
+        switch (objectReturn.tag) 
         {
-            coinPool.Add(gameObject);
-            gameObject.SetActive(false);
-        }
-        else if (gameObject.CompareTag("Obstacle"))
-        {
-            obstaclePool.Add(gameObject);
-            gameObject.SetActive(false);
-        }
-        else if (gameObject.CompareTag("Heal"))
-        {
-            gameObject.SetActive(false);
+            case "Coin" : 
+                coinPool.Add(objectReturn);
+                objectReturn.SetActive(false);
+                break;
+
+            case "Obstacle":
+                obstaclePool.Add(objectReturn);
+                objectReturn.SetActive(false);            
+                break;
+
+            case "Heal":
+                objectReturn.SetActive(false);               
+                break;
+
+            case "SpeedBoost":
+                objectReturn.SetActive(false);            
+                break;
         }
     }
 }
