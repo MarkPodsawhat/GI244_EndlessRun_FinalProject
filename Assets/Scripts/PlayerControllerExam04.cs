@@ -81,12 +81,6 @@ public class PlayerController : MonoBehaviour
         scoreText.text = score.ToString();
         lifeText.text = hp.ToString();
 
-        if (sprintAction.triggered)
-        {
-            moveLeft.speed *= 2;
-            moveLeft.leftBound *= 2;
-        }
-
         if (jumpAction.triggered && jumpCount != 0 && !gameOver)
         {
             rb.linearVelocity = new Vector3(0,0,0);
@@ -144,10 +138,8 @@ public class PlayerController : MonoBehaviour
                         gameOverMenu.SetActive(true);
                         inGameUI.SetActive(false);
                         gameOver = true;
-                        Debug.Log("Game Over!");
                         playerAnim.SetBool("Death_b", true);
                         playerAnim.SetInteger("DeathType_int", 1);
-                        Debug.Log(score);
                     }
                     break;
 
